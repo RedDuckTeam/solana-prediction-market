@@ -1,0 +1,44 @@
+# Rust — matches at any depth, not only the workspace root
+target/
+**/*.rs.bk
+
+# Anchor / Solana
+.anchor
+test-ledger/
+*.so
+
+# Deployment keys. Every deployment generates its own; committing one hands
+# over upgrade authority.
+**/deploy/*-keypair.json
+*.pem
+
+# Node
+node_modules/
+.next/
+dist/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+
+# Local configuration
+.env
+.env.local
+.env.*.local
+
+# Worker secrets for `wrangler dev`. The example is committed and says what
+# goes here; anything else with that name holds a real endpoint.
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/settings.json
+
+# Deployer keys handed to a session, never committed
+.keys/
+
+# Wrangler local state
+.wrangler/

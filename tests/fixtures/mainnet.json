@@ -1,0 +1,28 @@
+[
+  {
+    "pool": "3ucNos4NbumPLZNWztqGHNFFgkHeRMBQAVemeeomsUxv",
+    "program": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "observation": "3Y695CuQ8AP4anbwAqiEBeQF9KxqHFr8piEwvw3UePnQ",
+    "token_mint_0": "So11111111111111111111111111111111111111112",
+    "token_mint_1": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "decimals_0": 9,
+    "decimals_1": 6,
+    "tick_current": -25788,
+    "pool_len": 1544,
+    "observation_len": 4483,
+    "captured_at": 1786625323
+  },
+  {
+    "pool": "CYbD9RaToYMtWKA7QZyoLahnHdWq553Vm62Lh6qWtuxq",
+    "program": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "observation": "AA5RaVvyGyZgtmAsJJHT5ZVBxVPtAXuYaMwfgeFJW4Mk",
+    "token_mint_0": "So11111111111111111111111111111111111111112",
+    "token_mint_1": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "decimals_0": 9,
+    "decimals_1": 6,
+    "tick_current": -25787,
+    "pool_len": 1544,
+    "observation_len": 4483,
+    "captured_at": 1786625324
+  }
+]

@@ -1,0 +1,12 @@
+[package]
+name = "market-math"
+description = "Q64.64 fixed-point arithmetic with deterministic floor rounding."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+uint = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

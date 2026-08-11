@@ -1,0 +1,13 @@
+[package]
+name = "market-feeds"
+description = "Reads time-weighted prices out of Raydium CLMM observation buffers."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+market-math = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
+sha2 = "0.10"

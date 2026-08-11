@@ -2,6 +2,7 @@
 members = [
     "crates/market-math",
     "crates/market-vm",
+    "crates/market-feeds",
 ]
 resolver = "2"
 
@@ -14,6 +15,7 @@ repository = "https://github.com/RedDuckTeam/solana-prediction-market"
 [workspace.dependencies]
 market-math = { path = "crates/market-math" }
 market-vm = { path = "crates/market-vm" }
+market-feeds = { path = "crates/market-feeds" }
 
 anchor-lang = "1.1.2"
 anchor-spl = "1.1.2"

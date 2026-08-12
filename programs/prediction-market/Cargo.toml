@@ -1,0 +1,31 @@
+[package]
+name = "prediction-market"
+description = "Prediction markets that settle from on-chain price history."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "prediction_market"
+
+[features]
+default = []
+# Shortens the governance timelock so an end-to-end run can exercise the
+# proposal path. Never enable for a real deployment.
+test = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+
+[dependencies]
+anchor-lang = { workspace = true, features = ["init-if-needed"] }
+anchor-spl = { workspace = true }
+solana-sha256-hasher = { workspace = true }
+solana-keccak-hasher = { workspace = true }
+market-math = { workspace = true }
+market-vm = { workspace = true }
+market-feeds = { workspace = true }
+market-core = { workspace = true }

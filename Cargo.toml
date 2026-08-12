@@ -4,6 +4,7 @@ members = [
     "crates/market-vm",
     "crates/market-feeds",
     "crates/market-core",
+    "programs/prediction-market",
 ]
 resolver = "2"
 

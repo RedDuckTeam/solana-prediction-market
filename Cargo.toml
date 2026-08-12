@@ -5,8 +5,12 @@ members = [
     "crates/market-feeds",
     "crates/market-core",
     "programs/prediction-market",
+    "tests/integration",
 ]
 resolver = "2"
+# Its own workspace: the live-node tests need `solana-client`, whose transitive
+# versions cannot be unified with the ones LiteSVM pins.
+exclude = ["tests/e2e"]
 
 [workspace.package]
 version = "0.1.0"

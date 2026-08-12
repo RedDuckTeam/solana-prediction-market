@@ -1,0 +1,26 @@
+[package]
+name = "integration-tests"
+description = "Integration tests against a simulated ledger."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+
+[dev-dependencies]
+anchor-lang = { workspace = true }
+anchor-spl = { workspace = true }
+litesvm = "0.15"
+# Pinned: litesvm 0.15.2 is built against the 4.1 runtime, and 4.2 changed
+# `ExecutionRecord`'s fields despite being a minor bump.
+solana-program-runtime = "=4.1.1"
+prediction-market = { path = "../../programs/prediction-market", features = ["no-entrypoint"] }
+market-core = { workspace = true }
+market-feeds = { workspace = true }
+market-math = { workspace = true }
+market-vm = { workspace = true }
+solana-sdk = "4"
+solana-compute-budget-interface = "3"
+spl-token = "9"
+spl-associated-token-account = "8"

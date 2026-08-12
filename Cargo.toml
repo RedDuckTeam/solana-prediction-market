@@ -4,6 +4,7 @@ members = [
     "crates/market-vm",
     "crates/market-feeds",
     "crates/market-core",
+    "crates/market-wasm",
     "programs/prediction-market",
     "tests/integration",
 ]
@@ -23,6 +24,7 @@ market-math = { path = "crates/market-math" }
 market-vm = { path = "crates/market-vm" }
 market-feeds = { path = "crates/market-feeds" }
 market-core = { path = "crates/market-core" }
+market-wasm = { path = "crates/market-wasm" }
 
 anchor-lang = "1.1.2"
 anchor-spl = "1.1.2"

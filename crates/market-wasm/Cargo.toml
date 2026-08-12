@@ -1,0 +1,23 @@
+[package]
+name = "market-wasm"
+description = "The predicate verifier, compiled for the browser."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+market-vm = { workspace = true }
+market-feeds = { workspace = true }
+market-math = { workspace = true }
+# Pinned: the generated glue must come from the same version as the CLI
+# that emits it, and a mismatch fails at bindgen time rather than at runtime.
+wasm-bindgen = "=0.2.104"
+# The evaluator's hashing, matching the syscalls the chain build uses.
+sha2 = "0.10"
+tiny-keccak = { version = "2", features = ["keccak"] }
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false

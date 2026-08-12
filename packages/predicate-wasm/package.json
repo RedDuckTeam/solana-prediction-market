@@ -1,0 +1,16 @@
+{
+  "name": "@prediction-market/predicate-wasm",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./pkg/market_wasm.js",
+  "types": "./pkg/market_wasm.d.ts",
+  "exports": { ".": "./pkg/market_wasm.js" },
+  "scripts": {
+    "build": "./build.sh",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

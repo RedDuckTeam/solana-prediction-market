@@ -1,0 +1,12 @@
+[package]
+name = "market-core"
+description = "Market lifecycle rules and payout arithmetic, free of any chain dependency."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+market-math = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

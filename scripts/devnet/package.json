@@ -1,0 +1,29 @@
+{
+  "name": "@prediction-market/devnet",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "pools": "node src/pools.ts",
+    "liquidity": "node src/liquidity.ts",
+    "seed": "node src/seed.ts",
+    "params": "node src/params.ts",
+    "markets": "node src/markets.ts",
+    "nudge": "node src/nudge.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anchor-lang/core": "1.1.2",
+    "@prediction-market/sdk": "workspace:*",
+    "@raydium-io/raydium-sdk-v2": "0.2.60-alpha",
+    "@solana/spl-token": "^0.4.14",
+    "@solana/web3.js": "^1.98.4",
+    "bn.js": "^5.2.5",
+    "decimal.js": "^10.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "@types/bn.js": "^5.1.6"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "@prediction-market/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "pnpm typecheck && vite build",
+    "preview": "pnpm build && vite preview",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.worker.json",
+    "deploy": "pnpm build && wrangler deploy -c dist/solana_prediction_market/wrangler.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@anchor-lang/core": "1.1.2",
+    "@prediction-market/predicate-wasm": "workspace:*",
+    "@prediction-market/sdk": "workspace:*",
+    "@radix-ui/react-slot": "^1.1.1",
+    "@raydium-io/raydium-sdk-v2": "0.2.60-alpha",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/wallet-adapter-base": "^0.9.27",
+    "@solana/wallet-adapter-react": "^0.15.39",
+    "@solana/wallet-adapter-react-ui": "^0.9.39",
+    "@solana/web3.js": "^1.98.4",
+    "@xyflow/react": "^12.11.3",
+    "buffer": "^6.0.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.469.0",
+    "radix-ui": "^1.6.7",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router": "^7.1.0",
+    "tailwind-merge": "^2.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.52.1",
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/bn.js": "^5.2.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.3.0",
+    "tw-animate-css": "^1.2.5",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.7",
+    "vitest": "^4.1.10",
+    "wrangler": "^4.123.0"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    // The worker runs on Cloudflare, not in a browser and not in Node: its
+    // globals come from here rather than from the app's DOM lib.
+    "types": ["@cloudflare/workers-types"]
+  },
+  "include": ["worker"]
+}

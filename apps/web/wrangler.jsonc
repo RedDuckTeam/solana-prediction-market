@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "solana-prediction-market",
+  // Deliberately not today's date: a compatibility_date ahead of the installed
+  // wrangler version produces a warning on every command.
+  "compatibility_date": "2026-07-01",
+  // The worker serves the built site and, on one path, forwards JSON-RPC to the
+  // real endpoint so its key never reaches the browser. See worker/index.ts.
+  "main": "./worker/index.ts",
+  "assets": {
+    // The client half of the build only. The other half is the worker's own
+    // bundle, and it sits beside `.dev.vars` -- uploading this directory whole
+    // would publish a secret as a static file.
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    // Client-side routing: unknown paths must return index.html rather than a 404.
+    "not_found_handling": "single-page-application"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

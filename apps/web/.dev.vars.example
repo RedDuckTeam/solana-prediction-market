@@ -1,0 +1,13 @@
+# The RPC endpoint, key and all. Copy this file to `.dev.vars` and fill it in.
+#
+# Read by both ways of running the site locally: `wrangler dev` reads it because
+# it is wrangler's own file for local secrets, and the Vite dev server is
+# pointed at it too, so there is one file rather than two.
+#
+# Not needed to deploy. There the same name is a secret on the worker:
+#
+#   pnpm --filter @prediction-market/web exec wrangler secret put UPSTREAM_RPC_URL
+#
+# Left unset entirely, the site still runs against the cluster's public
+# endpoint, which needs no account and is rate limited hard enough to notice.
+UPSTREAM_RPC_URL=https://devnet.your-provider.com/?api-key=...

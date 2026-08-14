@@ -1,0 +1,3415 @@
+{
+  "address": "CDJdcKyxiBHDKbyLMTi9988Bw2Vu1i9FnqRcQp7dJreD",
+  "metadata": {
+    "name": "prediction_market",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Prediction markets that settle from on-chain price history."
+  },
+  "instructions": [
+    {
+      "name": "accept_authority",
+      "docs": [
+        "Accepts a nomination."
+      ],
+      "discriminator": [
+        107,
+        86,
+        198,
+        91,
+        33,
+        12,
+        107,
+        160
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "next_authority",
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "adopt_params",
+      "docs": [
+        "Applies a queued parameter change whose timelock has run out."
+      ],
+      "discriminator": [
+        42,
+        175,
+        31,
+        66,
+        38,
+        221,
+        62,
+        30
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim",
+      "docs": [
+        "Burns a whole outcome position for the collateral it is owed and closes",
+        "the token account."
+      ],
+      "discriminator": [
+        62,
+        198,
+        214,
+        193,
+        213,
+        159,
+        108,
+        210
+      ],
+      "accounts": [
+        {
+          "name": "market",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market.market_id",
+                "account": "Market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "relations": [
+            "market"
+          ]
+        },
+        {
+          "name": "side_mint",
+          "writable": true
+        },
+        {
+          "name": "holder_outcome",
+          "writable": true
+        },
+        {
+          "name": "holder_collateral",
+          "writable": true
+        },
+        {
+          "name": "holder",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "side_is_yes",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "close_market",
+      "docs": [
+        "Closes an emptied market and returns what rent can be returned."
+      ],
+      "discriminator": [
+        88,
+        154,
+        248,
+        186,
+        48,
+        14,
+        123,
+        244
+      ],
+      "accounts": [
+        {
+          "name": "market",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market.market_id",
+                "account": "Market"
+              }
+            ]
+          },
+          "relations": [
+            "spec"
+          ]
+        },
+        {
+          "name": "spec",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  112,
+                  101,
+                  99
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "relations": [
+            "market"
+          ]
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "relations": [
+            "market"
+          ]
+        },
+        {
+          "name": "caller",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "collect_fee",
+      "docs": [
+        "Pushes one of the three fee cuts to the party it belongs to."
+      ],
+      "discriminator": [
+        60,
+        173,
+        247,
+        103,
+        4,
+        93,
+        130,
+        48
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "market",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market.market_id",
+                "account": "Market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "relations": [
+            "market"
+          ]
+        },
+        {
+          "name": "destination",
+          "docs": [
+            "Must be owned by whoever the chosen cut belongs to."
+          ],
+          "writable": true
+        },
+        {
+          "name": "caller",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "recipient",
+          "type": {
+            "defined": {
+              "name": "FeeRecipient"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "create_market",
+      "docs": [
+        "Creates a market: mints, vault, spec, and the bond that pays its cranks."
+      ],
+      "discriminator": [
+        103,
+        226,
+        97,
+        235,
+        200,
+        188,
+        251,
+        254
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "collateral",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  108,
+                  108,
+                  97,
+                  116,
+                  101,
+                  114,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "collateral_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "docs": [
+            "Same account as `collateral.mint`; named separately so `has_one` can",
+            "bind them."
+          ],
+          "relations": [
+            "collateral"
+          ]
+        },
+        {
+          "name": "collateral_mint"
+        },
+        {
+          "name": "market",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "args.market_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "spec",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  112,
+                  101,
+                  99
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "yes_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  101,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "no_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  110,
+                  111
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "treasury",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CreateMarketArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "docs": [
+        "Stakes collateral on a side and mints that side's outcome tokens 1:1."
+      ],
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "market",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market.market_id",
+                "account": "Market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "collateral",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  108,
+                  108,
+                  97,
+                  116,
+                  101,
+                  114,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "collateral_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "collateral_mint",
+          "relations": [
+            "market"
+          ]
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "relations": [
+            "market"
+          ]
+        },
+        {
+          "name": "side_mint",
+          "docs": [
+            "The side being staked. Checked against the market in the handler so a",
+            "single context serves both sides."
+          ],
+          "writable": true
+        },
+        {
+          "name": "depositor_collateral",
+          "writable": true
+        },
+        {
+          "name": "depositor_outcome",
+          "writable": true
+        },
+        {
+          "name": "depositor",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "side_is_yes",
+          "type": "bool"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_config",
+      "docs": [
+        "One-time setup. The deployer becomes the first authority and is",
+        "expected to hand it to a multisig immediately."
+      ],
+      "discriminator": [
+        208,
+        127,
+        21,
+        1,
+        194,
+        190,
+        196,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "InitializeConfigArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "nominate_authority",
+      "docs": [
+        "Nominates a new authority; it must accept before anything changes."
+      ],
+      "discriminator": [
+        148,
+        182,
+        144,
+        91,
+        186,
+        12,
+        118,
+        18
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "next",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "propose_params",
+      "docs": [
+        "Queues a parameter change. It takes effect only after the timelock, and",
+        "only for markets created after that."
+      ],
+      "discriminator": [
+        94,
+        141,
+        220,
+        182,
+        171,
+        53,
+        52,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "MarketParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "register_collateral",
+      "docs": [
+        "Approves a collateral mint after checking it carries no extension that",
+        "would make the vault insolvent."
+      ],
+      "discriminator": [
+        141,
+        208,
+        33,
+        233,
+        94,
+        168,
+        180,
+        178
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "mint",
+          "docs": [
+            "Classic SPL mints only.",
+            "",
+            "`Account<Mint>` refuses anything the legacy Token program does not own,",
+            "which rules out Token-2022 entirely. That is deliberate for v1: a",
+            "transfer fee would make the vault structurally insolvent, since a",
+            "deposit of `x` arrives as `x - fee` while `x` outcome tokens are minted.",
+            "Admitting Token-2022 means screening every extension first."
+          ]
+        },
+        {
+          "name": "collateral",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  108,
+                  108,
+                  97,
+                  116,
+                  101,
+                  114,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "min_stake",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "register_feed",
+      "docs": [
+        "Admits a price source to the registry, effective one timelock later."
+      ],
+      "discriminator": [
+        138,
+        181,
+        114,
+        65,
+        71,
+        145,
+        61,
+        111
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "pool",
+          "docs": [
+            "`market_feeds`, which checks the discriminator. The pair's mints and",
+            "decimals are read out of it rather than taken as arguments: a",
+            "transposed pair or a wrong decimal count is a price normalised upside",
+            "down, discovered only when a market settles wrong."
+          ]
+        },
+        {
+          "name": "observation_state",
+          "docs": [
+            "that `pool_id` names the pool above; the pool must name it back."
+          ]
+        },
+        {
+          "name": "feed",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "observation_state"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "RegisterFeedArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "register_pyth_feed",
+      "docs": [
+        "Admits a Pyth instrument to the registry, effective one timelock later."
+      ],
+      "discriminator": [
+        248,
+        52,
+        16,
+        126,
+        0,
+        172,
+        58,
+        112
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "feed",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "args.feed_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "RegisterPythFeedArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "resolve",
+      "docs": [
+        "Runs the predicate over the frozen prices and splits the pot."
+      ],
+      "discriminator": [
+        246,
+        150,
+        236,
+        206,
+        108,
+        63,
+        58,
+        10
+      ],
+      "accounts": [
+        {
+          "name": "market",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market.market_id",
+                "account": "Market"
+              }
+            ]
+          },
+          "relations": [
+            "spec",
+            "snapshot"
+          ]
+        },
+        {
+          "name": "spec",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  112,
+                  101,
+                  99
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "snapshot",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  110,
+                  97,
+                  112,
+                  115,
+                  104,
+                  111,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "resolver",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "set_paused",
+      "docs": [
+        "Stops new markets from being created. Existing markets settle normally."
+      ],
+      "discriminator": [
+        91,
+        60,
+        125,
+        192,
+        176,
+        225,
+        166,
+        218
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "paused",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "snapshot",
+      "docs": [
+        "Freezes every declared feed's price for the settlement window.",
+        "",
+        "Permissionless and paid from the bond. Separate from `resolve` so the",
+        "answer depends only on what was recorded, never on when the crank ran."
+      ],
+      "discriminator": [
+        144,
+        236,
+        6,
+        133,
+        233,
+        160,
+        21,
+        94
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "market",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market.market_id",
+                "account": "Market"
+              }
+            ]
+          },
+          "relations": [
+            "spec"
+          ]
+        },
+        {
+          "name": "spec",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  112,
+                  101,
+                  99
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "snapshot",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  110,
+                  97,
+                  112,
+                  115,
+                  104,
+                  111,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "keeper",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "sweep_dust",
+      "docs": [
+        "Sweeps rounding dust and unclaimed collateral once claiming has closed."
+      ],
+      "discriminator": [
+        9,
+        49,
+        242,
+        88,
+        156,
+        84,
+        109,
+        15
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "market",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market.market_id",
+                "account": "Market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "relations": [
+            "market"
+          ]
+        },
+        {
+          "name": "treasury_token",
+          "writable": true
+        },
+        {
+          "name": "caller",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_collateral",
+      "docs": [
+        "Adjusts a collateral mint's floor, or withdraws it from new markets."
+      ],
+      "discriminator": [
+        218,
+        227,
+        184,
+        124,
+        133,
+        81,
+        157,
+        131
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "collateral",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  108,
+                  108,
+                  97,
+                  116,
+                  101,
+                  114,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "collateral.mint",
+                "account": "Collateral"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "min_stake",
+          "type": "u64"
+        },
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "update_feed",
+      "docs": [
+        "Updates a feed's attested depth, or disables it."
+      ],
+      "discriminator": [
+        222,
+        6,
+        52,
+        131,
+        173,
+        81,
+        113,
+        247
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "feed",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "feed.source_id",
+                "account": "Feed"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "depth_quote",
+          "type": "u64"
+        },
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "void",
+      "docs": [
+        "Abandons a market that cannot settle honestly, refunding at par."
+      ],
+      "discriminator": [
+        55,
+        130,
+        74,
+        24,
+        235,
+        14,
+        16,
+        3
+      ],
+      "accounts": [
+        {
+          "name": "market",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market.market_id",
+                "account": "Market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "caller",
+          "signer": true
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Collateral",
+      "discriminator": [
+        123,
+        130,
+        234,
+        63,
+        255,
+        240,
+        255,
+        92
+      ]
+    },
+    {
+      "name": "Config",
+      "discriminator": [
+        155,
+        12,
+        170,
+        224,
+        30,
+        250,
+        204,
+        130
+      ]
+    },
+    {
+      "name": "Feed",
+      "discriminator": [
+        69,
+        191,
+        16,
+        227,
+        132,
+        187,
+        84,
+        227
+      ]
+    },
+    {
+      "name": "Market",
+      "discriminator": [
+        219,
+        190,
+        213,
+        55,
+        0,
+        227,
+        198,
+        154
+      ]
+    },
+    {
+      "name": "MarketSpec",
+      "discriminator": [
+        30,
+        100,
+        19,
+        58,
+        38,
+        198,
+        170,
+        226
+      ]
+    },
+    {
+      "name": "Snapshot",
+      "discriminator": [
+        137,
+        213,
+        28,
+        133,
+        224,
+        161,
+        48,
+        108
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "Claimed",
+      "discriminator": [
+        217,
+        192,
+        123,
+        72,
+        108,
+        150,
+        248,
+        33
+      ]
+    },
+    {
+      "name": "Deposited",
+      "discriminator": [
+        111,
+        141,
+        26,
+        45,
+        161,
+        35,
+        100,
+        57
+      ]
+    },
+    {
+      "name": "DustSwept",
+      "discriminator": [
+        131,
+        70,
+        179,
+        205,
+        208,
+        80,
+        13,
+        168
+      ]
+    },
+    {
+      "name": "FeeCollected",
+      "discriminator": [
+        12,
+        28,
+        17,
+        248,
+        244,
+        36,
+        8,
+        73
+      ]
+    },
+    {
+      "name": "FeedRegistered",
+      "discriminator": [
+        96,
+        127,
+        205,
+        247,
+        125,
+        203,
+        93,
+        60
+      ]
+    },
+    {
+      "name": "MarketClosed",
+      "discriminator": [
+        86,
+        91,
+        119,
+        43,
+        94,
+        0,
+        217,
+        113
+      ]
+    },
+    {
+      "name": "MarketCreated",
+      "discriminator": [
+        88,
+        184,
+        130,
+        231,
+        226,
+        84,
+        6,
+        58
+      ]
+    },
+    {
+      "name": "MarketResolved",
+      "discriminator": [
+        89,
+        67,
+        230,
+        95,
+        143,
+        106,
+        199,
+        202
+      ]
+    },
+    {
+      "name": "MarketVoided",
+      "discriminator": [
+        217,
+        12,
+        138,
+        39,
+        108,
+        75,
+        89,
+        26
+      ]
+    },
+    {
+      "name": "ParamsProposed",
+      "discriminator": [
+        29,
+        64,
+        243,
+        241,
+        75,
+        135,
+        93,
+        142
+      ]
+    },
+    {
+      "name": "SnapshotTaken",
+      "discriminator": [
+        113,
+        204,
+        151,
+        224,
+        2,
+        128,
+        237,
+        207
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Paused",
+      "msg": "Program is paused"
+    },
+    {
+      "code": 6001,
+      "name": "NotAuthorized",
+      "msg": "Caller is not the governance authority"
+    },
+    {
+      "code": 6002,
+      "name": "TimelockPending",
+      "msg": "Timelock has not elapsed"
+    },
+    {
+      "code": 6003,
+      "name": "NothingPending",
+      "msg": "No parameter change is pending"
+    },
+    {
+      "code": 6004,
+      "name": "ParameterOutOfRange",
+      "msg": "Parameter is outside its permitted range"
+    },
+    {
+      "code": 6005,
+      "name": "FeedNotActive",
+      "msg": "Feed is not yet effective or has been disabled"
+    },
+    {
+      "code": 6006,
+      "name": "FeedPoolMismatch",
+      "msg": "Feed does not belong to the pool it names"
+    },
+    {
+      "code": 6007,
+      "name": "FeedAccountsMismatch",
+      "msg": "Feed accounts were not supplied in the order the spec declares"
+    },
+    {
+      "code": 6008,
+      "name": "DuplicateFeed",
+      "msg": "A feed is listed more than once"
+    },
+    {
+      "code": 6009,
+      "name": "CollateralNotRegistered",
+      "msg": "Collateral mint is not registered"
+    },
+    {
+      "code": 6010,
+      "name": "SpecHashMismatch",
+      "msg": "Market spec does not hash to the value recorded on the market"
+    },
+    {
+      "code": 6011,
+      "name": "SettlementTimeInvalid",
+      "msg": "Settlement time is in the past or too far out"
+    },
+    {
+      "code": 6012,
+      "name": "PredicateInvalid",
+      "msg": "Predicate failed static verification"
+    },
+    {
+      "code": 6013,
+      "name": "RampTooNarrow",
+      "msg": "Predicate declares a settlement band narrower than governance allows"
+    },
+    {
+      "code": 6014,
+      "name": "RulesUriTooLong",
+      "msg": "Rules URI is too long"
+    },
+    {
+      "code": 6015,
+      "name": "WrongState",
+      "msg": "Action is not allowed in the market's current state"
+    },
+    {
+      "code": 6016,
+      "name": "DepositsClosed",
+      "msg": "Market is not accepting deposits right now"
+    },
+    {
+      "code": 6017,
+      "name": "OutsideSnapshotWindow",
+      "msg": "Snapshot may only be taken between settlement and the grace deadline"
+    },
+    {
+      "code": 6018,
+      "name": "VoidConditionNotMet",
+      "msg": "Market cannot be voided yet"
+    },
+    {
+      "code": 6019,
+      "name": "CapExceeded",
+      "msg": "Deposit would push this side past its cap"
+    },
+    {
+      "code": 6020,
+      "name": "ZeroAmount",
+      "msg": "Deposit amount is zero"
+    },
+    {
+      "code": 6021,
+      "name": "FeedUnreadable",
+      "msg": "A declared price feed could not be read"
+    },
+    {
+      "code": 6022,
+      "name": "PredicateAborted",
+      "msg": "Predicate aborted; the market voids and refunds"
+    },
+    {
+      "code": 6023,
+      "name": "NothingToClaim",
+      "msg": "Nothing to claim for this side"
+    },
+    {
+      "code": 6024,
+      "name": "ClaimWindowClosed",
+      "msg": "Claim window has closed"
+    },
+    {
+      "code": 6025,
+      "name": "ClaimWindowOpen",
+      "msg": "Claim window is still open"
+    },
+    {
+      "code": 6026,
+      "name": "VaultNotEmpty",
+      "msg": "Vault is not empty"
+    },
+    {
+      "code": 6027,
+      "name": "Overflow",
+      "msg": "Arithmetic overflow"
+    },
+    {
+      "code": 6028,
+      "name": "BelowMinimumStake",
+      "msg": "Stake is below the minimum this collateral accepts"
+    }
+  ],
+  "types": [
+    {
+      "name": "BoundaryRecord",
+      "docs": [
+        "Both observations bounding the segment a window boundary falls in.",
+        "",
+        "The pair, not just the nearer one: the interpolated cumulative depends on",
+        "the segment's slope, and a slope needs two points. Recording one would let",
+        "two different rings archive identical bytes and settle differently."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "index",
+            "type": "u16"
+          },
+          {
+            "name": "observed_at",
+            "type": "u32"
+          },
+          {
+            "name": "cumulative",
+            "type": "i64"
+          },
+          {
+            "name": "next_index",
+            "type": "u16"
+          },
+          {
+            "name": "next_observed_at",
+            "type": "u32"
+          },
+          {
+            "name": "next_cumulative",
+            "type": "i64"
+          },
+          {
+            "name": "interpolated",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Claimed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "holder",
+            "type": "pubkey"
+          },
+          {
+            "name": "side_is_yes",
+            "type": "bool"
+          },
+          {
+            "name": "burned",
+            "type": "u64"
+          },
+          {
+            "name": "paid",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Collateral",
+      "docs": [
+        "A collateral mint governance has approved.",
+        "",
+        "Approval is explicit rather than implicit because a Token-2022 mint carrying",
+        "a transfer fee would make the vault structurally insolvent: a deposit of `x`",
+        "arrives as `x - fee` while `x` outcome tokens get minted. Transfer hooks and",
+        "permanent delegates are refused for the same reason."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "decimals",
+            "type": "u8"
+          },
+          {
+            "name": "enabled",
+            "type": "bool"
+          },
+          {
+            "name": "min_stake",
+            "docs": [
+              "Smallest stake accepted, so that rent on the token accounts stays a",
+              "sane fraction of the bet."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Config",
+      "docs": [
+        "Protocol-wide settings."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "docs": [
+              "Governance. Changes to it are two-step, so a typo cannot orphan the",
+              "protocol."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "pending_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury",
+            "type": "pubkey"
+          },
+          {
+            "name": "paused",
+            "docs": [
+              "Kill switch for new markets.",
+              "",
+              "Exists because the price source is a program someone else can upgrade:",
+              "Raydium's CLMM sits behind a multisig, and if its account layout or its",
+              "accumulation rule ever changes, this stops new markets from being",
+              "created against it while existing ones settle out."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "params",
+            "type": {
+              "defined": {
+                "name": "MarketParams"
+              }
+            }
+          },
+          {
+            "name": "pending_params",
+            "docs": [
+              "Parameters waiting out the timelock, and when they become effective."
+            ],
+            "type": {
+              "defined": {
+                "name": "MarketParams"
+              }
+            }
+          },
+          {
+            "name": "pending_effective_at",
+            "type": "i64"
+          },
+          {
+            "name": "has_pending",
+            "type": "bool"
+          },
+          {
+            "name": "timelock",
+            "docs": [
+              "How long parameter and feed changes must wait, seconds."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "raydium_clmm_program",
+            "docs": [
+              "The Raydium CLMM program whose pools this deployment reads.",
+              "",
+              "Configured rather than hard-coded: it is an address that differs between",
+              "clusters and could be redeployed, and burying it in a constant would",
+              "make a wrong value a redeploy instead of a governance action."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "pyth_receiver_program",
+            "docs": [
+              "The Pyth receiver program whose price accounts this deployment reads."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "markets_created",
+            "docs": [
+              "Markets created so far, for reporting only."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreateMarketArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market_id",
+            "docs": [
+              "Caller-chosen, so the market's address is known before signing."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "settle_at",
+            "type": "i64"
+          },
+          {
+            "name": "strike",
+            "docs": [
+              "Value the predicate's score is compared against, Q64.64."
+            ],
+            "type": "i128"
+          },
+          {
+            "name": "ramp_bps",
+            "docs": [
+              "Half-width of the settlement band, in basis points of the strike."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "feeds",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "FeedRef"
+                }
+              }
+            }
+          },
+          {
+            "name": "bytecode",
+            "type": "bytes"
+          },
+          {
+            "name": "rules_uri",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Deposited",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "depositor",
+            "type": "pubkey"
+          },
+          {
+            "name": "side_is_yes",
+            "type": "bool"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "staked_yes",
+            "type": "u64"
+          },
+          {
+            "name": "staked_no",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DustSwept",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeCollected",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeRecipient",
+      "docs": [
+        "Which of the three fee cuts is being collected."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Treasury"
+          },
+          {
+            "name": "Creator"
+          },
+          {
+            "name": "Keeper"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Feed",
+      "docs": [
+        "A price source governance has admitted.",
+        "",
+        "Markets choose from the registry rather than naming pools directly: pool",
+        "creation is permissionless and has no liquidity floor, so a creator free to",
+        "pick sources can stand up two shallow pools and own the median of three."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "kind",
+            "type": {
+              "defined": {
+                "name": "FeedKind"
+              }
+            }
+          },
+          {
+            "name": "source_id",
+            "docs": [
+              "Seeds this account. The ring's address for Raydium, the instrument id",
+              "for Pyth -- both 32 bytes, so nothing can be registered twice under two",
+              "names."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "pool",
+            "docs": [
+              "Raydium only: the pool the ring belongs to."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "token0_mint",
+            "docs": [
+              "Raydium only: the pair's mints, recorded for indexers."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "token1_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "token0_decimals",
+            "docs": [
+              "Raydium only: how the tick is normalised into a price. Pyth carries its",
+              "own exponent, so these are zero there."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "token1_decimals",
+            "type": "u8"
+          },
+          {
+            "name": "depth_quote",
+            "docs": [
+              "Quote value that moves this pool's price by one percent, attested by",
+              "governance rather than measured. `PoolState.liquidity` is in-range `L`,",
+              "not depth: a $100 single-tick JIT position inflates it as much as $200k",
+              "spread normally. A trusted honest number beats an objective-looking one."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "effective_at",
+            "docs": [
+              "When this feed becomes usable. Set one timelock into the future."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "enabled",
+            "type": "bool"
+          },
+          {
+            "name": "label",
+            "docs": [
+              "Human-readable pair label, for indexers."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeedKind",
+      "docs": [
+        "Both kinds exist because they answer to different assumptions: Raydium is",
+        "re-derivable by anyone from consensus state but needs a deep, busy pool;",
+        "Pyth covers far more instruments at the cost of trusting its publishers and",
+        "the guardians carrying their data."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "RaydiumClmm"
+          },
+          {
+            "name": "PythTwap"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeedRef",
+      "docs": [
+        "One price input of a market, naming a registry feed and how to read it."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "feed",
+            "type": "pubkey"
+          },
+          {
+            "name": "invert",
+            "docs": [
+              "Read the pair the other way round: the price of `token1` in `token0`.",
+              "",
+              "This is what lets one pool serve as either leg of a composed price, so",
+              "three genuinely independent estimates can be built out of pairs that",
+              "exist, instead of pretending three deep pools exist for every token."
+            ],
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeedRegistered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "feed",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "effective_at",
+            "type": "i64"
+          },
+          {
+            "name": "depth_quote",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeConfigArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "treasury",
+            "type": "pubkey"
+          },
+          {
+            "name": "raydium_clmm_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "pyth_receiver_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "timelock",
+            "type": "u32"
+          },
+          {
+            "name": "params",
+            "type": {
+              "defined": {
+                "name": "MarketParams"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Market",
+      "docs": [
+        "The mutable half of a market."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "MarketStatus"
+              }
+            }
+          },
+          {
+            "name": "market_id",
+            "docs": [
+              "Caller-chosen identifier, so the address is known before the",
+              "transaction is sent and two markets may share a spec."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "spec_hash",
+            "docs": [
+              "Commits to the spec for good. Resolution checks it, so swapping the",
+              "spec account for another cannot change how a market settles."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "collateral_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "yes_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "no_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "open_at",
+            "type": "i64"
+          },
+          {
+            "name": "settle_at",
+            "type": "i64"
+          },
+          {
+            "name": "params",
+            "docs": [
+              "Copied from `Config` at creation and never revisited."
+            ],
+            "type": {
+              "defined": {
+                "name": "MarketParams"
+              }
+            }
+          },
+          {
+            "name": "cap_per_side",
+            "docs": [
+              "Per-side stake ceiling, in collateral base units."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "strike",
+            "docs": [
+              "The value the predicate's score is compared against, Q64.64."
+            ],
+            "type": "i128"
+          },
+          {
+            "name": "ramp_bps",
+            "docs": [
+              "Half-width of the settlement band, in basis points of the strike.",
+              "",
+              "Applied by the program, never written into the predicate: a band buried",
+              "in bytecode could not be checked, so a creator could publish a step",
+              "function. Here every market has one, at least as wide as governance asks."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "staked_yes",
+            "docs": [
+              "Authoritative stake counters.",
+              "",
+              "Not the outcome mints' supplies: any holder can burn their own SPL",
+              "tokens through the Token program, which would shrink a supply while the",
+              "collateral stayed in the vault. Payout arithmetic anchored to supply",
+              "would then overpay whoever claimed last."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "staked_no",
+            "type": "u64"
+          },
+          {
+            "name": "status_reason",
+            "type": {
+              "defined": {
+                "name": "VoidCause"
+              }
+            }
+          },
+          {
+            "name": "share",
+            "docs": [
+              "Fraction of the pot owed to YES, Q64.64, fixed at resolution."
+            ],
+            "type": "i128"
+          },
+          {
+            "name": "pool_yes",
+            "type": "u64"
+          },
+          {
+            "name": "pool_no",
+            "type": "u64"
+          },
+          {
+            "name": "fee_total",
+            "type": "u64"
+          },
+          {
+            "name": "fee_owed_treasury",
+            "type": "u64"
+          },
+          {
+            "name": "fee_owed_creator",
+            "type": "u64"
+          },
+          {
+            "name": "fee_owed_keeper",
+            "type": "u64"
+          },
+          {
+            "name": "snapshot_keeper",
+            "type": "pubkey"
+          },
+          {
+            "name": "resolved_at",
+            "type": "i64"
+          },
+          {
+            "name": "bond_lamports",
+            "docs": [
+              "Refundable lamports held for the cranks."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketClosed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "rent_returned_to",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "collateral_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "settle_at",
+            "type": "i64"
+          },
+          {
+            "name": "lock_at",
+            "type": "i64"
+          },
+          {
+            "name": "cap_per_side",
+            "type": "u64"
+          },
+          {
+            "name": "spec_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketParams",
+      "docs": [
+        "Governance parameters a market copies at creation."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "fee_bps",
+            "docs": [
+              "Fee on the transferred amount, in basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "feed_cap_bps",
+            "docs": [
+              "Per-side stake cap as a fraction of the thinnest feed's attested depth."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "min_ramp_bps",
+            "docs": [
+              "Narrowest settlement band a market may declare, in basis points."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "twap_window",
+            "docs": [
+              "Averaging window, seconds."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "grace",
+            "docs": [
+              "How long after settlement a snapshot may still be taken, seconds."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "skew",
+            "docs": [
+              "Gap between the betting deadline and the window, seconds."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "max_segment",
+            "docs": [
+              "Longest tolerated observation gap inside the window, seconds."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "min_observations",
+            "docs": [
+              "Observations that must fall inside the window for a pool feed to count."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "creation_cooldown",
+            "docs": [
+              "Delay between creating a market and opening it for bets, seconds."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "claim_window",
+            "docs": [
+              "How long holders have to claim before dust is swept, seconds."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "pyth_window_tolerance",
+            "docs": [
+              "Seconds either end of a Pyth window may differ from the requested one."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "max_confidence_bps",
+            "docs": [
+              "Widest publisher disagreement a market will settle against, in basis",
+              "points of the price."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "max_down_slots_ratio",
+            "docs": [
+              "Largest share of the window that may have fallen in missed slots, out",
+              "of 1 000 000."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "keeper_reward",
+            "docs": [
+              "Paid to each crank, in lamports, out of the creator's bond."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "creation_fee",
+            "docs": [
+              "Non-refundable, in lamports. The bond alone is not an anti-spam measure:",
+              "a creator can crank their own market and get all of it back."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketResolved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "resolver",
+            "type": "pubkey"
+          },
+          {
+            "name": "share",
+            "docs": [
+              "Fraction of the pot owed to YES, Q64.64."
+            ],
+            "type": "i128"
+          },
+          {
+            "name": "pool_yes",
+            "type": "u64"
+          },
+          {
+            "name": "pool_no",
+            "type": "u64"
+          },
+          {
+            "name": "fee_total",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketSpec",
+      "docs": [
+        "The immutable half of a market: what it measures and how it decides."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "feeds",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "FeedRef"
+                }
+              }
+            }
+          },
+          {
+            "name": "bytecode",
+            "type": "bytes"
+          },
+          {
+            "name": "rules_uri",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketStatus",
+      "docs": [
+        "Where a market is in its life. Mirrors `market_core::MarketState`."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Created"
+          },
+          {
+            "name": "Open"
+          },
+          {
+            "name": "Locked"
+          },
+          {
+            "name": "Snapshotted"
+          },
+          {
+            "name": "Resolved"
+          },
+          {
+            "name": "Void"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketVoided",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "cause",
+            "type": {
+              "defined": {
+                "name": "VoidCause"
+              }
+            }
+          },
+          {
+            "name": "at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ParamsProposed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "effective_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReadingRecord",
+      "docs": [
+        "One feed's reading, in enough detail to reproduce it from archived state."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "feed",
+            "type": "pubkey"
+          },
+          {
+            "name": "source",
+            "type": {
+              "defined": {
+                "name": "SourceRecord"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RegisterFeedArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "depth_quote",
+            "type": "u64"
+          },
+          {
+            "name": "label",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "probe_from",
+            "docs": [
+              "A window the ring must be able to serve right now.",
+              "",
+              "Registration proves the feed works by actually reading it, rather than",
+              "asserting that it will. A pool that cannot answer a probe today will not",
+              "answer a settlement tomorrow."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "probe_to",
+            "type": "i64"
+          },
+          {
+            "name": "probe_max_segment",
+            "type": "u32"
+          },
+          {
+            "name": "probe_min_observations",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RegisterPythFeedArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "feed_id",
+            "docs": [
+              "The Pyth instrument identifier this feed quotes."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "depth_quote",
+            "type": "u64"
+          },
+          {
+            "name": "label",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Snapshot",
+      "docs": [
+        "Prices frozen at settlement, plus everything needed to re-derive them.",
+        "",
+        "The raw observation indices and cumulatives are kept because the ring they",
+        "came from is overwritten within about twenty-five minutes on an active pool.",
+        "Without them a resolution could never be audited after the fact, which would",
+        "make \"verifiable settlement\" a claim rather than a property."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "taken_at",
+            "type": "i64"
+          },
+          {
+            "name": "keeper",
+            "type": "pubkey"
+          },
+          {
+            "name": "feeds_hash",
+            "docs": [
+              "Hash over every field below, so a snapshot can be quoted compactly."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "prices",
+            "type": {
+              "vec": "i128"
+            }
+          },
+          {
+            "name": "readings",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "ReadingRecord"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SnapshotTaken",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "keeper",
+            "type": "pubkey"
+          },
+          {
+            "name": "taken_at",
+            "type": "i64"
+          },
+          {
+            "name": "feeds_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "prices",
+            "docs": [
+              "Q64.64 prices, in the order the spec declares its feeds."
+            ],
+            "type": {
+              "vec": "i128"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SourceRecord",
+      "docs": [
+        "Everything needed to re-derive one reading, whatever produced it.",
+        "",
+        "Archived differently because they are verifiable differently: a Raydium",
+        "reading is reproduced from Solana's own history, so the raw pair is what",
+        "matters, while a Pyth account was transient and cannot be reproduced at all —",
+        "so what is kept is the assertion believed and the tests it passed."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "RaydiumClmm",
+            "fields": [
+              {
+                "name": "average_tick",
+                "type": "i32"
+              },
+              {
+                "name": "window_start",
+                "type": {
+                  "defined": {
+                    "name": "BoundaryRecord"
+                  }
+                }
+              },
+              {
+                "name": "window_end",
+                "type": {
+                  "defined": {
+                    "name": "BoundaryRecord"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "PythTwap",
+            "fields": [
+              {
+                "name": "raw_price",
+                "type": "i64"
+              },
+              {
+                "name": "raw_conf",
+                "type": "u64"
+              },
+              {
+                "name": "exponent",
+                "type": "i32"
+              },
+              {
+                "name": "confidence_bps",
+                "type": "u32"
+              },
+              {
+                "name": "down_slots_ratio",
+                "type": "u32"
+              },
+              {
+                "name": "start_time",
+                "type": "i64"
+              },
+              {
+                "name": "end_time",
+                "type": "i64"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoidCause",
+      "docs": [
+        "Why a market was abandoned. Mirrors `market_core::VoidReason`."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "None"
+          },
+          {
+            "name": "SnapshotMissed"
+          },
+          {
+            "name": "EmptySide"
+          },
+          {
+            "name": "PredicateAborted"
+          }
+        ]
+      }
+    }
+  ],
+  "constants": [
+    {
+      "name": "MIN_MARKET_FEEDS",
+      "docs": [
+        "Three, so a median survives one source being captured. Raising it costs",
+        "coverage; lowering it costs the median its point.",
+        "",
+        "`#[constant]` puts it in the IDL, which is where the client reads it from —",
+        "a second copy in the front end would drift the first time this changes."
+      ],
+      "type": "u8",
+      "value": "3"
+    }
+  ]
+}

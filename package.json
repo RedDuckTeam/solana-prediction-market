@@ -1,0 +1,12 @@
+{
+  "name": "solana-prediction-market",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "build": "pnpm --filter @prediction-market/sdk build && pnpm --filter @prediction-market/web build",
+    "dev": "pnpm --filter @prediction-market/web dev",
+    "idl": "node packages/sdk/scripts/copy-idl.mjs",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint"
+  }
+}

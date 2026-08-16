@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SOLANA_VERSION: v3.1.10
+  ANCHOR_VERSION: 1.1.2
+
+jobs:
+  rust:
+    name: Programs and crates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install Solana
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/${SOLANA_VERSION}/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+
+      - name: Install Anchor
+        run: cargo install --git https://github.com/solana-foundation/anchor --tag v${ANCHOR_VERSION} anchor-cli --locked
+
+      - run: cargo fmt --all --check
+
+      # Builds the BPF binary the integration tests load, and the IDL the
+      # client is checked against. Everything after this depends on it.
+      - run: anchor build
+
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - run: cargo test --workspace
+
+      - name: The committed IDL matches the one just built
+        run: |
+          node packages/sdk/scripts/copy-idl.mjs
+          git diff --exit-code packages/sdk/src/idl/
+
+      # The verifier the editor runs is this crate compiled to wasm. Building it
+      # here proves the committed artefact can still be produced from source.
+      - name: The wasm verifier still builds
+        run: |
+          rustup target add wasm32-unknown-unknown
+          cargo install wasm-bindgen-cli --version 0.2.104 --locked
+          ./packages/predicate-wasm/build.sh
+
+  typescript:
+    name: Client and front end
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r typecheck
+      - run: pnpm --filter @prediction-market/web test
+      - run: pnpm --filter @prediction-market/web build
